@@ -1,0 +1,154 @@
+/* Table for storing weather data */
+USE [weatherstation]
+GO
+
+/****** Object:  Table [dbo].[data]    Script Date: 21.9.2021 16.43.14 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[data](
+	[data_id] [int] IDENTITY(10000,1) NOT NULL,
+	[search_id] [int] NOT NULL,
+	[provider_id] [int] NOT NULL,
+	[datatype_id] [int] NOT NULL,
+	[data_timestamp] [datetime] NULL,
+	[data_value] [varchar](80) NULL,
+ CONSTRAINT [PK_fmi_data] PRIMARY KEY CLUSTERED 
+(
+	[data_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[data]  WITH NOCHECK ADD  CONSTRAINT [FK_data_datatypes] FOREIGN KEY([datatype_id])
+REFERENCES [dbo].[datatypes] ([datatype_id])
+GO
+
+ALTER TABLE [dbo].[data] CHECK CONSTRAINT [FK_data_datatypes]
+GO
+
+ALTER TABLE [dbo].[data]  WITH NOCHECK ADD  CONSTRAINT [FK_data_providers] FOREIGN KEY([provider_id])
+REFERENCES [dbo].[providers] ([provider_id])
+GO
+
+ALTER TABLE [dbo].[data] CHECK CONSTRAINT [FK_data_providers]
+GO
+
+ALTER TABLE [dbo].[data]  WITH NOCHECK ADD  CONSTRAINT [FK_fmi_data_searches] FOREIGN KEY([search_id])
+REFERENCES [dbo].[searches] ([search_id])
+GO
+
+ALTER TABLE [dbo].[data] CHECK CONSTRAINT [FK_fmi_data_searches]
+GO
+
+/* Table for datatype references */
+
+USE [weatherstation-backup-10-08-2021]
+GO
+
+/****** Object:  Table [dbo].[datatypes]    Script Date: 21.9.2021 16.44.25 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[datatypes](
+	[datatype_id] [int] IDENTITY(1,1) NOT NULL,
+	[datatype] [varchar](30) NULL,
+	[datatype_description] [varchar](256) NULL,
+ CONSTRAINT [PK_datatypes] PRIMARY KEY CLUSTERED 
+(
+	[datatype_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+/* Table for geocodes */ 
+
+USE [weatherstation-backup-10-08-2021]
+GO
+
+/****** Object:  Table [dbo].[geocodes]    Script Date: 21.9.2021 16.44.58 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[geocodes](
+	[location_id] [int] IDENTITY(10000,1) NOT NULL,
+	[location_name] [varchar](50) NULL,
+	[latitude] [float] NULL,
+	[longitude] [float] NULL,
+ CONSTRAINT [PK_geocodes] PRIMARY KEY CLUSTERED 
+(
+	[location_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+/* Table for data providers (APIs) */ 
+
+USE [weatherstation-backup-10-08-2021]
+GO
+
+/****** Object:  Table [dbo].[providers]    Script Date: 21.9.2021 16.45.14 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[providers](
+	[provider_id] [int] IDENTITY(1,1) NOT NULL,
+	[provider_name] [varchar](30) NULL,
+	[username] [varchar](30) NULL,
+	[password] [varchar](40) NULL,
+	[api_key] [varchar](350) NULL,
+	[useragent] [varchar](30) NULL,
+	[token_expiry_time] [datetime] NULL,
+ CONSTRAINT [PK_providers] PRIMARY KEY CLUSTERED 
+(
+	[provider_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+/* Table for searches */ 
+USE [weatherstation-backup-10-08-2021]
+GO
+
+/****** Object:  Table [dbo].[searches]    Script Date: 21.9.2021 16.45.39 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[searches](
+	[search_id] [int] IDENTITY(100000,1) NOT NULL,
+	[hash_id] [varchar](64) NOT NULL,
+	[timestamp] [datetime] NULL,
+	[input_location] [varchar](40) NULL,
+	[expires_yrno] [datetime] NULL,
+	[last_modified_yrno] [datetime] NULL,
+	[expires_FMI] [datetime] NULL,
+	[last_modified_FMI] [datetime] NULL,
+	[expires_foreca] [datetime] NULL,
+	[last_modified_foreca] [datetime] NULL,
+ CONSTRAINT [PK_searches_1] PRIMARY KEY CLUSTERED 
+(
+	[search_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
+
+
+
+
