@@ -1,0 +1,25 @@
+﻿ForecaSearch
+<br />
+@ViewData["Accesstoken"]<br />
+@ViewData["Forecast"]
+
+<table>
+    <thead>
+        <tr>
+            <th>Timestamp</th>
+            <th>Temperature</th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+        @foreach (var data in ViewData.Model.forecast)
+        {
+        <tr>
+            <td style="text-align:center">@data.time</td>
+            <td style="text-align:center">@data.temperature</td>
+        </tr>
+        }
+
+        </tbody>
+</table>

@@ -1,0 +1,65 @@
+﻿@model IEnumerable<MVC_Sasema_test.Models.data>
+
+@* This view is here to demonstrate how to display data from database *@
+
+@{
+    ViewBag.Title = "Weather data - Index";
+}
+
+<h2>Weather data</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.data_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.search_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.provider_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.datatype_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.data_timestamp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.data_value)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.data_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.search_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.provider_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.datatype_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.data_timestamp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.data_value)
+            </td>
+
+        </tr>
+    }
+    </tbody>
+</table>
+
+
+
+
+

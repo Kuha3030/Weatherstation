@@ -1,0 +1,209 @@
+﻿@using MVC_Sasema_test.Models3;
+@model dynamic
+@{
+    ViewBag.Title = "Index";
+}
+@* # This view is here to how to display data straight from .json
+    # There's also a prototype of a search function*@
+
+
+
+<h2>@ViewBag.showLocation</h2>
+@Html.AntiForgeryToken()
+<hr />
+
+@* Action link, joka ottaa käyttäjän syöttämän datan textboxista ja välittää sen metodille.*@
+@Html.ActionLink("Search", "SaveToDB", "yrno", new { location = "thisValueGetsReplaced", TypeId = "1" }, new { @class = "btn btn-info" })
+<input type="text" name="IP" id="IP" pattern="[A-Za-zÀ-ÖØ-öø-ÿ]" value="" />
+
+
+@Html.ActionLink("Erase data from DB", "EraseFromDB", "yrno", new { @class = "btn btn-danger" })
+
+<div class="container">
+    <div class="col-md-2">
+        <table class="table table-hover" style="width:300px">
+            <caption><h3 align="center">yr.no</h3></caption>
+
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Temperature</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+
+
+                @foreach (var item in Model.FMIList1.PointTimeSeriesObservation.Result.MeasurementTimeseries.Point)
+                {
+
+
+                    <tr>
+
+
+
+
+                        <td>@item.MeasurementTVP.Time</td>
+                        <td>@item.MeasurementTVP.Value2</td>
+
+
+                    </tr>
+
+
+
+
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-2">
+        <table class="table table-hover" style="width:300px">
+            <caption><h3 align="center">yr.no</h3></caption>
+
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Windspeed_ms</th>
+
+                </tr>
+            </thead>
+
+            <tbody>
+
+
+
+                @foreach (var item in Model.FMIList2.PointTimeSeriesObservation.Result.MeasurementTimeseries.Point)
+                {
+
+
+                    <tr>
+
+
+
+
+                        <td>@item.MeasurementTVP.Time</td>
+                        <td>@item.MeasurementTVP.Value2</td>
+
+
+                    </tr>
+
+
+
+
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-2">
+        <table class="table table-hover" style="width:300px">
+            <caption><h3 align="center">yr.no</h3></caption>
+
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Precipitation_amount</th>
+
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model.FMIList3.PointTimeSeriesObservation.Result.MeasurementTimeseries.Point)
+                {
+                    <tr>
+                        <td>@item.MeasurementTVP.Time</td>
+                        <td>@item.MeasurementTVP.Value2</td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-2">
+        <table class="table table-hover" style="width:300px">
+            <caption><h3 align="center">yr.no</h3></caption>
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Total_cloud_cover</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model.FMIList4.PointTimeSeriesObservation.Result.MeasurementTimeseries.Point)
+                {
+
+
+                    <tr>
+
+
+
+
+                        <td>@item.MeasurementTVP.Time</td>
+                        <td>@item.MeasurementTVP.Value2</td>
+
+
+                    </tr>
+
+
+
+
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+    @*
+            <table class="table table-hover" style="width:400px">
+                <caption><h3 align="center">yr.no</h3></caption>
+
+                <thead>
+                    <tr>
+                        <th>Timecode</th>
+                        <th>Temperature</th>
+
+
+
+                    </tr>
+
+                </thead>
+                <tbody>
+                 @foreach (var item in Model.FMIObject)
+                    {
+                        <tr>
+                            <!--<td>@item.GmlDataBlock.doubleOrNilReasonTupleList</td>-->
+                            <td>@item.GmlcovPositions °</td>-->
+                            @*  <td>@item.data.instant.details.wind_speed m/s</td>
+                                <td>@item.data.instant.details.relative_humidity %</td>
+                                <td>@item.data.instant.details.air_pressure_at_sea_level hPa</td>
+                                <td>@item.data. hPa</td>
+
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>*@
+
+    @section scripts {
+        <script>
+            $(function () {
+                $('.btn').click(function () {
+                    var ipvalue = $("#IP").val();
+                    var azAZ = new RegExp('^[a-zA-Z\u00C0-\u00FF]*$');
+
+                    if (azAZ.test(ipvalue)) {
+
+
+                        this.href = this.href.replace("thisValueGetsReplaced", ipvalue);
+                    }
+                    else {
+                        alert('Use only letters: a-z, A-Z, åäö, ÅÄÖ');
+                    }
+                });
+            });
+        </script>
+    }

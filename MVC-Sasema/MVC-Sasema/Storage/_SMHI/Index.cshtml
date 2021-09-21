@@ -1,0 +1,82 @@
+﻿@using MVC_Sasema_test.Models2
+@model dynamic
+@{
+    ViewBag.Title = "Index";
+}
+@* # This view is here to how to display data straight from .json
+    # There's also a prototype of a search function*@
+
+
+
+<h2>yr.no: @ViewBag.showLocation</h2>
+@Html.AntiForgeryToken()
+<hr />
+
+@* Action link, joka ottaa käyttäjän syöttämän datan textboxista ja välittää sen metodille.*@
+@Html.ActionLink("Search", "SaveToDB", "yrno", new { location = "thisValueGetsReplaced", TypeId = "1" }, new { @class = "btn btn-info" })
+<input type="text" name="IP" id="IP" pattern="[A-Za-zÀ-ÖØ-öø-ÿ]" value="" />
+
+
+@Html.ActionLink("Erase data from DB", "EraseFromDB", "yrno", new { @class = "btn btn-danger" })
+
+
+
+<table class="table table-hover" style="width:400px">
+    <caption><h3 align="center">SMHI</h3></caption>
+
+    <thead>
+        <tr>
+            <th>Timecode</th>
+            <th>Temperature</th>
+            @*           <th>Wind speed</th>
+                <th>Humidity</th>
+                <th>Air pressure</th>
+
+            *@
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.SMHIObject.timeSeries)
+        {
+        <tr>
+            <td>@item.validTime</td>
+            <td>
+                @foreach (var item2 in item.parameters)
+                {
+                    foreach (var item3 in item2.values)
+                    {
+                        @item3
+                    }
+
+                }
+            </td>
+        </tr>
+
+        }
+
+
+    </tbody>
+</table>
+
+
+
+@section scripts {
+    <script>
+        $(function () {
+            $('.btn').click(function () {
+                var ipvalue = $("#IP").val();
+                var azAZ = new RegExp('^[a-zA-Z\u00C0-\u00FF]*$');
+
+                if (azAZ.test(ipvalue)) {
+
+
+                    this.href = this.href.replace("thisValueGetsReplaced", ipvalue);
+                }
+                else {
+                    alert('Use only letters: a-z, A-Z, åäö, ÅÄÖ');
+                }
+            });
+        });
+    </script>
+}

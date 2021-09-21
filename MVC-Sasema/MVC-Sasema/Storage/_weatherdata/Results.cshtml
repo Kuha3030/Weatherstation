@@ -1,0 +1,88 @@
+﻿
+@model IEnumerable<MVC_Sasema_test.Models.data>
+
+@* This view is here to demonstrate how to display data from database *@
+
+@{
+    ViewBag.Title = "Weather data from: " + ViewBag.searchString;
+}
+
+<h2>Weather data</h2>
+
+<div class="container-fluid">
+    <div class="col-md-3">
+        <table class="table table-striped" style="width:300px">
+            <caption><h3 align="center">yr.no</h3></caption>
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.provider_id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.data_timestamp)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.data_value)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    @if (item.provider_id == 2 && item.search_id == ViewBag.searchID)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.provider_id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.data_timestamp)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.data_value)
+                        </td>
+                    }
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-offset-4">
+        <table class="table table-striped" style="width:300px">
+            <caption><h3 align="center">FMI</h3></caption>
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.provider_id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.data_timestamp)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.data_value)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        @if (item.provider_id == 1 && item.search_id == ViewBag.searchID)
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.provider_id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.data_timestamp)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.data_value)
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

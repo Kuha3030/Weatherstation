@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="weatherstationModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="data">
+          <Key>
+            <PropertyRef Name="data_id" />
+          </Key>
+          <Property Name="data_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="search_id" Type="int" Nullable="false" />
+          <Property Name="provider_id" Type="int" Nullable="false" />
+          <Property Name="datatype_id" Type="int" Nullable="false" />
+          <Property Name="data_timestamp" Type="datetime" />
+          <Property Name="data_value" Type="varchar" MaxLength="80" />
+        </EntityType>
+        <EntityType Name="datatypes">
+          <Key>
+            <PropertyRef Name="datatype_id" />
+          </Key>
+          <Property Name="datatype_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="datatype" Type="varchar" MaxLength="30" />
+          <Property Name="datatype_description" Type="varchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="geocodes">
+          <Key>
+            <PropertyRef Name="location_id" />
+          </Key>
+          <Property Name="location_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="location_name" Type="varchar" MaxLength="50" />
+          <Property Name="latitude" Type="float" />
+          <Property Name="longitude" Type="float" />
+        </EntityType>
+        <EntityType Name="providers">
+          <Key>
+            <PropertyRef Name="provider_id" />
+          </Key>
+          <Property Name="provider_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="provider_name" Type="varchar" MaxLength="30" />
+          <Property Name="username" Type="varchar" MaxLength="30" />
+          <Property Name="password" Type="varchar" MaxLength="40" />
+          <Property Name="api_key" Type="varchar" MaxLength="350" />
+          <Property Name="useragent" Type="varchar" MaxLength="30" />
+          <Property Name="token_expiry_time" Type="datetime" />
+        </EntityType>
+        <EntityType Name="searches">
+          <Key>
+            <PropertyRef Name="search_id" />
+          </Key>
+          <Property Name="search_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="hash_id" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="timestamp" Type="datetime" />
+          <Property Name="input_location" Type="varchar" MaxLength="40" />
+          <Property Name="expires_yrno" Type="datetime" />
+          <Property Name="last_modified_yrno" Type="datetime" />
+          <Property Name="expires_FMI" Type="datetime" />
+          <Property Name="last_modified_FMI" Type="datetime" />
+          <Property Name="expires_foreca" Type="datetime" />
+          <Property Name="last_modified_foreca" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_data_datatypes">
+          <End Role="datatypes" Type="Self.datatypes" Multiplicity="1" />
+          <End Role="data" Type="Self.data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="datatypes">
+              <PropertyRef Name="datatype_id" />
+            </Principal>
+            <Dependent Role="data">
+              <PropertyRef Name="datatype_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_data_providers">
+          <End Role="providers" Type="Self.providers" Multiplicity="1" />
+          <End Role="data" Type="Self.data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="providers">
+              <PropertyRef Name="provider_id" />
+            </Principal>
+            <Dependent Role="data">
+              <PropertyRef Name="provider_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_fmi_data_searches">
+          <End Role="searches" Type="Self.searches" Multiplicity="1" />
+          <End Role="data" Type="Self.data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="searches">
+              <PropertyRef Name="search_id" />
+            </Principal>
+            <Dependent Role="data">
+              <PropertyRef Name="search_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="weatherstationModelStoreContainer">
+          <EntitySet Name="data" EntityType="Self.data" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="datatypes" EntityType="Self.datatypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="geocodes" EntityType="Self.geocodes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="providers" EntityType="Self.providers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="searches" EntityType="Self.searches" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_data_datatypes" Association="Self.FK_data_datatypes">
+            <End Role="datatypes" EntitySet="datatypes" />
+            <End Role="data" EntitySet="data" />
+          </AssociationSet>
+          <AssociationSet Name="FK_data_providers" Association="Self.FK_data_providers">
+            <End Role="providers" EntitySet="providers" />
+            <End Role="data" EntitySet="data" />
+          </AssociationSet>
+          <AssociationSet Name="FK_fmi_data_searches" Association="Self.FK_fmi_data_searches">
+            <End Role="searches" EntitySet="searches" />
+            <End Role="data" EntitySet="data" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="weatherstationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="data">
+          <Key>
+            <PropertyRef Name="data_id" />
+          </Key>
+          <Property Name="data_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="search_id" Type="Int32" Nullable="false" />
+          <Property Name="provider_id" Type="Int32" Nullable="false" />
+          <Property Name="datatype_id" Type="Int32" Nullable="false" />
+          <Property Name="data_timestamp" Type="DateTime" Precision="3" />
+          <Property Name="data_value" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="datatypes" Relationship="Self.FK_data_datatypes" FromRole="data" ToRole="datatypes" />
+          <NavigationProperty Name="providers" Relationship="Self.FK_data_providers" FromRole="data" ToRole="providers" />
+          <NavigationProperty Name="searches" Relationship="Self.FK_fmi_data_searches" FromRole="data" ToRole="searches" />
+        </EntityType>
+        <EntityType Name="datatypes">
+          <Key>
+            <PropertyRef Name="datatype_id" />
+          </Key>
+          <Property Name="datatype_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="datatype" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="datatype_description" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="data" Relationship="Self.FK_data_datatypes" FromRole="datatypes" ToRole="data" />
+        </EntityType>
+        <EntityType Name="geocodes">
+          <Key>
+            <PropertyRef Name="location_id" />
+          </Key>
+          <Property Name="location_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="location_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="latitude" Type="Double" />
+          <Property Name="longitude" Type="Double" />
+        </EntityType>
+        <EntityType Name="providers">
+          <Key>
+            <PropertyRef Name="provider_id" />
+          </Key>
+          <Property Name="provider_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="provider_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="username" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="api_key" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="useragent" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="data" Relationship="Self.FK_data_providers" FromRole="providers" ToRole="data" />
+          <Property Name="token_expiry_time" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="searches">
+          <Key>
+            <PropertyRef Name="search_id" />
+          </Key>
+          <Property Name="search_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="hash_id" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="timestamp" Type="DateTime" Precision="3" />
+          <Property Name="input_location" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="data" Relationship="Self.FK_fmi_data_searches" FromRole="searches" ToRole="data" />
+          <Property Name="expires_yrno" Type="DateTime" Precision="3" />
+          <Property Name="last_modified_yrno" Type="DateTime" Precision="3" />
+          <Property Name="expires_FMI" Type="DateTime" Precision="3" />
+          <Property Name="last_modified_FMI" Type="DateTime" Precision="3" />
+          <Property Name="expires_foreca" Type="DateTime" Precision="3" />
+          <Property Name="last_modified_foreca" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_data_datatypes">
+          <End Role="datatypes" Type="Self.datatypes" Multiplicity="1" />
+          <End Role="data" Type="Self.data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="datatypes">
+              <PropertyRef Name="datatype_id" />
+            </Principal>
+            <Dependent Role="data">
+              <PropertyRef Name="datatype_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_data_providers">
+          <End Role="providers" Type="Self.providers" Multiplicity="1" />
+          <End Role="data" Type="Self.data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="providers">
+              <PropertyRef Name="provider_id" />
+            </Principal>
+            <Dependent Role="data">
+              <PropertyRef Name="provider_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_fmi_data_searches">
+          <End Role="searches" Type="Self.searches" Multiplicity="1" />
+          <End Role="data" Type="Self.data" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="searches">
+              <PropertyRef Name="search_id" />
+            </Principal>
+            <Dependent Role="data">
+              <PropertyRef Name="search_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="weatherstationEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="data" EntityType="Self.data" />
+          <EntitySet Name="datatypes" EntityType="Self.datatypes" />
+          <EntitySet Name="geocodes" EntityType="Self.geocodes" />
+          <EntitySet Name="providers" EntityType="Self.providers" />
+          <EntitySet Name="searches" EntityType="Self.searches" />
+          <AssociationSet Name="FK_data_datatypes" Association="Self.FK_data_datatypes">
+            <End Role="datatypes" EntitySet="datatypes" />
+            <End Role="data" EntitySet="data" />
+          </AssociationSet>
+          <AssociationSet Name="FK_data_providers" Association="Self.FK_data_providers">
+            <End Role="providers" EntitySet="providers" />
+            <End Role="data" EntitySet="data" />
+          </AssociationSet>
+          <AssociationSet Name="FK_fmi_data_searches" Association="Self.FK_fmi_data_searches">
+            <End Role="searches" EntitySet="searches" />
+            <End Role="data" EntitySet="data" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="weatherstationModelStoreContainer" CdmEntityContainer="weatherstationEntities">
+          <EntitySetMapping Name="data">
+            <EntityTypeMapping TypeName="weatherstationModel.data">
+              <MappingFragment StoreEntitySet="data">
+                <ScalarProperty Name="data_id" ColumnName="data_id" />
+                <ScalarProperty Name="search_id" ColumnName="search_id" />
+                <ScalarProperty Name="provider_id" ColumnName="provider_id" />
+                <ScalarProperty Name="datatype_id" ColumnName="datatype_id" />
+                <ScalarProperty Name="data_timestamp" ColumnName="data_timestamp" />
+                <ScalarProperty Name="data_value" ColumnName="data_value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="datatypes">
+            <EntityTypeMapping TypeName="weatherstationModel.datatypes">
+              <MappingFragment StoreEntitySet="datatypes">
+                <ScalarProperty Name="datatype_id" ColumnName="datatype_id" />
+                <ScalarProperty Name="datatype" ColumnName="datatype" />
+                <ScalarProperty Name="datatype_description" ColumnName="datatype_description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="geocodes">
+            <EntityTypeMapping TypeName="weatherstationModel.geocodes">
+              <MappingFragment StoreEntitySet="geocodes">
+                <ScalarProperty Name="location_id" ColumnName="location_id" />
+                <ScalarProperty Name="location_name" ColumnName="location_name" />
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="providers">
+            <EntityTypeMapping TypeName="weatherstationModel.providers">
+              <MappingFragment StoreEntitySet="providers">
+                <ScalarProperty Name="token_expiry_time" ColumnName="token_expiry_time" />
+                <ScalarProperty Name="provider_id" ColumnName="provider_id" />
+                <ScalarProperty Name="provider_name" ColumnName="provider_name" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="api_key" ColumnName="api_key" />
+                <ScalarProperty Name="useragent" ColumnName="useragent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="searches">
+            <EntityTypeMapping TypeName="weatherstationModel.searches">
+              <MappingFragment StoreEntitySet="searches">
+                <ScalarProperty Name="last_modified_foreca" ColumnName="last_modified_foreca" />
+                <ScalarProperty Name="expires_foreca" ColumnName="expires_foreca" />
+                <ScalarProperty Name="last_modified_FMI" ColumnName="last_modified_FMI" />
+                <ScalarProperty Name="expires_FMI" ColumnName="expires_FMI" />
+                <ScalarProperty Name="last_modified_yrno" ColumnName="last_modified_yrno" />
+                <ScalarProperty Name="expires_yrno" ColumnName="expires_yrno" />
+                <ScalarProperty Name="search_id" ColumnName="search_id" />
+                <ScalarProperty Name="hash_id" ColumnName="hash_id" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="input_location" ColumnName="input_location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

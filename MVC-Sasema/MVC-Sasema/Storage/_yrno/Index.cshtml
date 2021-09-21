@@ -1,0 +1,88 @@
+﻿@using MVC_Sasema_test.Models2;
+@model dynamic
+@{
+    ViewBag.Title = "Index";
+}
+@* # This view is here to how to display data straight from .json
+    # There's also a prototype of a search function*@
+
+
+
+<h2>@ViewBag.showLocation</h2>
+@Html.AntiForgeryToken()
+<hr />
+
+@* Action link, joka ottaa käyttäjän syöttämän datan textboxista ja välittää sen metodille.*@
+@Html.ActionLink("Search", "SaveToDB", "yrno", new { location = "thisValueGetsReplaced", TypeId = "1" }, new { @class = "btn btn-info" })
+<input type="text" name="IP" id="IP" pattern="[A-Za-zÀ-ÖØ-öø-ÿ]" value="" />
+
+
+@Html.ActionLink("Erase data from DB", "EraseFromDB", "yrno", new { @class = "btn btn-danger" })
+<div class="container-fluid">
+    <div class="col-md-5">
+        <table class="table table-striped" style="width:600px">
+            <caption><h3 align="center">yr.no</h3></caption>
+
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Temperature</th>
+                    <th>Wind speed</th>
+                    <th>Perspiration amount</th>
+                    <th>Cloud area fraciton %</th>
+
+
+
+                    @*           <th>Wind speed</th>
+                        <th>Humidity</th>
+                        <th>Air pressure</th>
+
+                    *@
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model.YrnoTime)
+                {
+                <tr>
+                    <td>@item.From</td>
+                    @if (@item.Location.Temperature.Value != null)
+                    { 
+                    <td>@item.Location.Temperature.Value</td>
+                    }
+
+                    @*  <td>@item.data.instant.details.wind_speed m/s</td>
+        <td>@item.data.instant.details.relative_humidity %</td>
+        <td>@item.data.instant.details.air_pressure_at_sea_level hPa</td>
+        <td>@item.data. hPa</td>*@
+
+
+                </tr>
+                }
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(function () {
+            $('.btn').click(function () {
+                var ipvalue = $("#IP").val();
+                var azAZ = new RegExp('^[a-zA-Z\u00C0-\u00FF]*$');
+
+                if (azAZ.test(ipvalue)) {
+
+
+                    this.href = this.href.replace("thisValueGetsReplaced", ipvalue);
+                }
+                else {
+                    alert('Use only letters: a-z, A-Z, åäö, ÅÄÖ');
+                }
+            });
+        });
+    </script>
+}
