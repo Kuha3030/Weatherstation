@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Info";
+}
+<div class="jumbotron">
+
+    <!--Your IP: @ViewBag.userID<br />-->
+    <!--<p>Your IP: @ViewBag.userIP</p>-->
+    <!--@ViewBag.TimeZoneID-->
+    <br />
+    <h3>Info</h3>
+    <br />
+    <p>
+        This web application was made as a student exercise and may still contain bugs and spontanious behaviour. 
+    </p>
+    <p>
+        The search works best if you use Finnish locations. It may find locations from other countries, but the geolocation search is focused on Finland.
+        Search input only accepts words or words with dash (-) between them. Numbers for example aren't accpeted so don't try to use postal codes as input.
+    </p>
+
+    <p>Known bugs</p>
+
+    <ul>
+        <li>
+            Geolocation search tries to find closest matching location from Finland. Search for "Espanja" returns "Pikku-Ispania" instead of Geolocation error
+        </li>
+        <li>Summer and winter time changes need to be manually updated to the code</li>
+    </ul>
+
