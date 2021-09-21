@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+  <Class Name="MVC_Sasema_test.Controllers.CompilationController">
+    <Position X="6.75" Y="3.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAQQAAAIAAQAAAAgQAACAAACEAAAAAAAAECAAUAAIA=</HashCode>
+      <FileName>Controllers\CompilationController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC_Sasema_test.Controllers.DBTools">
+    <Position X="11.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAEAAAAEAA=</HashCode>
+      <FileName>Controllers\DBTools.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC_Sasema_test.Controllers.FMISearch">
+    <Position X="8.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Controllers\FMISearch.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC_Sasema_test.Controllers.ForecaSearch">
+    <Position X="6.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAAAAAAAgCIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\ForecaSearch.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC_Sasema_test.Controllers.GeoLocations">
+    <Position X="12" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAQAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\GeoLocations.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC_Sasema_test.Controllers.HomeController">
+    <Position X="6.75" Y="1.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEACAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\HomeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC_Sasema_test.Controllers.IPHashing">
+    <Position X="13.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAQAAAAAA=</HashCode>
+      <FileName>Controllers\IPHashing.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC_Sasema_test.Controllers.TimeTools">
+    <Position X="9.25" Y="3.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>gAAAACAAAAAQAAGAAAAAAAAAAAAAAAQABAAAAAAAABA=</HashCode>
+      <FileName>Controllers\TimeTools.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC_Sasema_test.Controllers.YrnoSearch">
+    <Position X="10.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Controllers\YrnoSearch.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC_Sasema_test.Models.ForecaModelJSON">
+    <Position X="6.75" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ForecaModelJSON.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC_Sasema_test.Models.GeoObject2">
+    <Position X="12" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Models\GeoLocationModel2.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC_Sasema_test.Models.weatherstationEntities">
+    <Position X="5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAgAAAAAAAAAAAIAAEAAAAAEAAAAQAAAAAAA=</HashCode>
+      <FileName>Models\Model1.Context.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC_Sasema_test.Models3.YrnoObjectComplete">
+    <Position X="10.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAKAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Storage\_YrnoModelComplete.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MVC_Sasema_test.Models3.FeatureCollection">
+    <Position X="8.5" Y="9.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Public" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AQACgxDAQAAABAAAAAAAAKAAogAAAAAACQAJAAAAAAA=</HashCode>
+      <FileName>Models\FMIXMLModel2.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="10" />
+</ClassDiagram>
