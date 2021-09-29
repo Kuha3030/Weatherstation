@@ -631,48 +631,7 @@ namespace MVC_Sasema_test.Controllers
 
         public ActionResult Index()
         {
-
-
-            //// # Fetch coordinates from database using GetGeo method
-            //Tuple<string, string> coordinates = GeoLocations.GetGeo(searchString);
-            //string FMIcoordinates = coordinates.Item1 + "," + coordinates.Item2;
-
-            //// # (only for the View)
-            //ViewBag.showLocation = searchString;
-
-            //// # FMI Fetch (to xml document)
-
-            //XmlDocument doc = new XmlDocument();
-            //doc.LoadXml(FMIsearch.GetFMI(FMIcoordinates));
-
-            //// Creating object for serializer and saving xml memorystream
-            //XmlSerializer serializer = new XmlSerializer(typeof(Models.FeatureCollection));
-            //MemoryStream xmlStream = new MemoryStream();
-            //doc.Save(xmlStream);
-            //xmlStream.Flush();
-            //xmlStream.Position = 0;
-
-            //StreamReader FMIDump = new StreamReader(xmlStream);
-
-            //// Yrno fetch
-            ////var yrnoDump = yrnoSearch.yrnoFetch(coordinates);
-
-            //// SMHI fetch
-            ////var SMHIDump = SMHISearch.SMHIFetch(coordinates);
-
-            //// Creating dynamic model for View. Datadumps get inserted into Expando object
-            //dynamic weatherModel = new ExpandoObject();
-            ////weatherModel.YrnoObject = JsonConvert.DeserializeObject<Models.YrnoObject>(yrnoDump);
-            ////weatherModel.SMHIObject = JsonConvert.DeserializeObject<Models2.SMHIObject>(SMHIDump);
-
-            //// # Reading and Deserializing XML memorystream to readable Object for the View. This approach differs a bit from deserializing JSON.
-            //weatherModel.FMIObject = (Models.FeatureCollection)serializer.Deserialize(FMIDump);
-            //FMIDump.Close();
-
-            // # Return view 
-            //return View(weatherModel);
             return RedirectToAction("Results");
-
         }
     }
 
