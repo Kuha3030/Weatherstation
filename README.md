@@ -15,3 +15,5 @@ Geocode-project is responsible for parsing this file and searching location if n
 This file will be moved to database later on.
 
 Sasema-MVC folder contains the asp.NET MVC Web application 
+
+EDIT: Separate projects are combined under the MVC application as classes in the final product.
