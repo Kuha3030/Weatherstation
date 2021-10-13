@@ -18,4 +18,4 @@ Sasema-MVC folder contains the asp.NET MVC Web application
 
 EDIT: Separate projects are combined under the MVC application as classes in the final product.
 
-MVC application needs a database to run properly. SQL queries for creating the DB can be found in SQL-queries.txt
+MVC application needs a database to run properly.
