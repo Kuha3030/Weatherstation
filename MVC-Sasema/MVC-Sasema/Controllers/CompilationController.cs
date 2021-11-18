@@ -1,35 +1,26 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 using MVC_Sasema_test.Models;
 using Newtonsoft.Json;
 using System.Data;
 using System.Data.SqlClient;
-using System.Dynamic;
-using System.IO;
-using System.Xml;
-using System.Xml.Serialization;
 using System.Diagnostics;
 using System.Collections.Generic;
-using System.Collections;
 using System.Globalization;
 
 namespace MVC_Sasema_test.Controllers
 {
     public class CompilationController : Controller
     {
-
-
         public static bool checkExpiredYrno = false;
         public static bool checkExpiredFMI = false;
         public static bool checkExpiredForeca = false;
-
 
         public static string StopwatchMethod, StopwatchSearch, StopwatchInsert, StopwatchDBoperations, StopwatchAccessToken;
         public static string searchLocation = "";
 
         private static weatherstationEntities db = new weatherstationEntities();
-
 
         public ActionResult Results()
         {
@@ -39,7 +30,6 @@ namespace MVC_Sasema_test.Controllers
 
             Session["UserID"] = userIDforSession;
             ViewBag.userID = userIDforSession;
-
 
             // # OBS! Server DateTime when uploaded to Azure is UTC!
             ViewBag.DateTime = DateTime.UtcNow.AddHours(-1);
@@ -65,11 +55,10 @@ namespace MVC_Sasema_test.Controllers
             ViewBag.searchLocation = searchLocation;
             Stopwatch stopwatchGatheringDataTable = new Stopwatch();
 
-
-            // # Checking for user changed now. If searchLocation is "" there will not be a previous result in View.
-            // ## searchLocation is always set back to "" after page has loaded. This is to avoid confusion between users.
-            // ## There's room for improvement here. We could show the last search the user made by using userID as identifier.
-            // ## DBTools.CheckForUser(userID) needs to be developed further for this to work.
+            // ## Checking for user changed now. If searchLocation is "" there will not be a previous result in View.
+            // # searchLocation is always set back to "" after page has loaded. This is to avoid confusion between users.
+            // # There's room for improvement here. We could show the last search the user made by using userID as identifier.
+            // # DBTools.CheckForUser(userID) needs to be developed further for this to work.
 
             if (searchLocation != "")
             {
@@ -118,8 +107,8 @@ namespace MVC_Sasema_test.Controllers
 
 
             // ## Using DataTable instead of class is due to "system.null_reference_exception" error when calling classes in View made from nested JSON.
-            // ## yrno's class based on XML needs to be reconstructed as it cannot be called upon direclty in View either.
-            // ## This may not be the most elegant solution, but atleast all the data is now in the same format for the View!
+            // # yrno's class based on XML needs to be reconstructed as it cannot be called upon direclty in View either.
+            // # This may not be the most elegant solution, but atleast all the data is now in the same format for the View!
 
             // # DataTable for showing search results in View
             DataTable dtForView = new DataTable("WeatherTable");
@@ -290,17 +279,10 @@ namespace MVC_Sasema_test.Controllers
         {   
             // ### This method saves search into Database
 
-            // # Handles javaScript error. This shouldn't happen anymore as RegEx should catch false inputs.
-            if (location == "thisValueGetsReplaced")
-            {
-                searchLocation = "Geolocation error";
-                return RedirectToAction("Results");
-            }
-
             // # Capitalizes the search location and puts the rest of it in lowercase.
             location = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(location);
 
-            // # Stopwatches for clocking method's operations.
+            // # Stopwatches for clocking method's operations. For dev use only.
             Stopwatch stopwatch = new Stopwatch();
             Stopwatch stopwatchInsert = new Stopwatch();
             Stopwatch stopwatchSearch = new Stopwatch();
@@ -378,10 +360,10 @@ namespace MVC_Sasema_test.Controllers
 
 
 
-                    // # Handling the response
-                    // ## If response list has more than 1 entries -> insert fetched data into DB.
-                    // ## If list has only first value it's an HTTP status code (error).
-                    // ## Logic below only handles response lists that have more than 1 value (when list actuallys contains insertable data)
+                    // ### Handling the response
+                    // # If list has only first value it's an HTTP status code (error).
+                    // # If response list has more than 1 entries -> insert fetched data into DB.
+                    // # Logic below only handles response lists that have more than 1 value (when list actuallys contains insertable data)
                     if (yrnoResponse.Count > 1 | FMIResponse.Count > 1 | ForecaResponse.Count > 1)
                     {
                         string yrnoLoad = "";
@@ -401,8 +383,6 @@ namespace MVC_Sasema_test.Controllers
                         if (yrnoResponse.Count > 1)
                         {
                             yrnoLoad = yrnoResponse[0];
-                            //sw.Write(yrnoLoad);
-                            //sw.Close();
                             yrnoExpires = yrnoResponse[1];
                             yrnoLastModified = yrnoResponse[2];
                         }
@@ -461,6 +441,7 @@ namespace MVC_Sasema_test.Controllers
                             search.expires_foreca = TimeTools.GMTStringToDateTime(forecaExpires);
                             search.last_modified_foreca = TimeTools.GMTStringToDateTime(forecaLastModified);
                         }
+                        // Using System.Data.Entity.DbSet
                         db.searches.Add(search);
                         db.SaveChanges();
 
@@ -469,7 +450,6 @@ namespace MVC_Sasema_test.Controllers
 
                         // # Create DataTable based on Models dbo.[data] table
                         // # Note! Data can be separated by provider_id later on
-
                         stopwatchInsert.Start();
                         using (DataTable dt = new DataTable("dataInsert"))
                         {
@@ -553,9 +533,6 @@ namespace MVC_Sasema_test.Controllers
                             {
                                 foreach (var dataEntry in forecaJsonConverted.forecast)
                                 {
-                                    ////string convertThis = dataEntry.MeasurementTVP.Value2.Replace(".", ",");
-                                    //double convertThis = double.Parse(dataEntry.MeasurementTVP.Value2, CultureInfo.InvariantCulture);
-                                    //string addThis = Convert.ToString(Math.Round(convertThis, 0), CultureInfo.InvariantCulture);
                                         DateTime addThisTime = dataEntry.time.ToUniversalTime();
 
                                         dt.Rows.Add(searchID, 3, 1, addThisTime, dataEntry.temperature);
@@ -568,9 +545,10 @@ namespace MVC_Sasema_test.Controllers
                                 }
                             }
 
-                            
+
 
                             // # Create DB connection and insert DataTable into dbo.data
+                            // Using: System.Data.SqlClient
                             using (var databaseConnection = new weatherstationEntities())
                             {
                                 // # For optimizing access time to DB.
@@ -620,9 +598,9 @@ namespace MVC_Sasema_test.Controllers
         }
         public ActionResult EraseFromDB()
             {
-                db.Database.ExecuteSqlCommand("DELETE FROM data");
+                //db.Database.ExecuteSqlCommand("DELETE FROM data");
 
-                db.SaveChanges();
+                //db.SaveChanges();
 
                 return RedirectToAction("Results");
             }
@@ -631,7 +609,9 @@ namespace MVC_Sasema_test.Controllers
 
         public ActionResult Index()
         {
+
             return RedirectToAction("Results");
+
         }
     }
 
