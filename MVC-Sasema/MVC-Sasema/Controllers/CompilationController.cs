@@ -275,6 +275,9 @@ namespace MVC_Sasema_test.Controllers
             searchLocation = "";
             return View();
         }
+        
+// ###################################################################################################################################################
+
         public ActionResult SaveToDB(string location)
         {   
             // ### This method saves search into Database
@@ -385,38 +388,25 @@ namespace MVC_Sasema_test.Controllers
                             yrnoLoad = yrnoResponse[0];
                             yrnoExpires = yrnoResponse[1];
                             yrnoLastModified = yrnoResponse[2];
+                            yrnoXmlConverted = YrnoSearch.ConvertYrnoXML(yrnoLoad);
                         }
                         if (FMIResponse.Count > 1)
                         {
                             FMILoad = FMIResponse[0];
                             FMIExpires = FMIResponse[1];
                             FMILastModified = FMIResponse[2];
+                            FMIxmlConverted = FMISearch.ConvertXML2(FMILoad);
+
                         }
                         if (ForecaResponse.Count > 1)
                         {
                             forecaLoad = ForecaResponse[0];
                             forecaExpires = ForecaResponse[1];
                             forecaLastModified = ForecaResponse[2];
-                        }
-
-
-                        // # Creating C# object from yr.no XML
-                        if (yrnoResponse.Count > 1)
-                        {
-                            yrnoXmlConverted = YrnoSearch.ConvertYrnoXML(yrnoLoad);
-                        }
-
-                        // # Creating C# object from FMI XML
-                        if (FMIResponse.Count > 1)
-                        {
-                            FMIxmlConverted = FMISearch.ConvertXML2(FMILoad);
-                        }
-                        if (ForecaResponse.Count > 1)
-                        {
                             forecaJsonConverted = JsonConvert.DeserializeObject<ForecaModelJSON>(forecaLoad);
                         }
-                        stopwatchSearch.Stop();
 
+                        stopwatchSearch.Stop();
 
                         // ## PART 2: Insert objects into database: ################################################################
                         stopwatchDBoperations.Start();
